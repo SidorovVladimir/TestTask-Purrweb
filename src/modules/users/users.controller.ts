@@ -1,23 +1,19 @@
 import {
-  Body,
   Controller,
   Get,
   Param,
   ParseIntPipe,
-  Post,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dto/create-user.dto';
+import { JwtAuthGuard } from 'src/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UsersService) {}
 
-  @Post()
-  createUser(@Body() createDto: CreateUserDTO): Promise<CreateUserDTO> {
-    return this.userService.createUser(createDto);
-  }
-
+  @UseGuards(JwtAuthGuard)
   @Get()
   getAllUsers(): Promise<CreateUserDTO[]> {
     return this.userService.getAllUsers();

@@ -17,6 +17,50 @@ export class UsersService {
     return bcrypt.hash(password, 10);
   }
 
+  async findUserByEmail(email: string): Promise<User> {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { email },
+        include: [
+          {
+            model: Columns,
+            include: [
+              {
+                model: Card,
+                include: [Comment],
+              },
+            ],
+          },
+        ],
+      });
+      return user;
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
+  async publicUser(email: string): Promise<User> {
+    try {
+      return this.userRepository.findOne({
+        where: { email },
+        attributes: { exclude: ['password'] },
+        include: [
+          {
+            model: Columns,
+            include: [
+              {
+                model: Card,
+                include: [Comment],
+              },
+            ],
+          },
+        ],
+      });
+    } catch (e) {
+      throw new Error(e);
+    }
+  }
+
   async createUser(dto: CreateUserDTO): Promise<CreateUserDTO> {
     try {
       const hashPassword = await this.hashPassword(dto.password);

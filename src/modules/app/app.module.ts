@@ -12,6 +12,8 @@ import { User } from '../users/models/user.model';
 import { Columns } from '../columns/models/column.model';
 import { Card } from '../cards/models/card.model';
 import { Comment } from '../comments/models/comment.model';
+import { AuthModule } from '../auth/auth.module';
+import { TokenModule } from '../token/token.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { Comment } from '../comments/models/comment.model';
     ColumnsModule,
     CardsModule,
     CommentsModule,
+    AuthModule,
+    TokenModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration],

@@ -5,4 +5,6 @@ export default () => ({
   db_host: process.env.POSTGRES_HOST,
   db_name: process.env.POSTGRES_DB,
   db_port: process.env.POSTGRES_PORT,
+  secret_jwt: process.env.SECRET_JWT,
+  expire_jwt: process.env.EXPIRE_JWT,
 });
