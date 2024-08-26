@@ -75,24 +75,6 @@ export class UsersService {
     }
   }
 
-  async getAllUsers(): Promise<CreateUserDTO[]> {
-    const user = await this.userRepository.findAll({
-      attributes: { exclude: ['password'] },
-      include: [
-        {
-          model: Columns,
-          include: [
-            {
-              model: Card,
-              include: [Comment],
-            },
-          ],
-        },
-      ],
-    });
-    return user;
-  }
-
   async getOneUser(id: number) {
     const user = await this.userRepository.findOne({
       where: { id },
@@ -110,5 +92,13 @@ export class UsersService {
       ],
     });
     return user;
+  }
+  async deleteUser(id: number): Promise<boolean> {
+    try {
+      await this.userRepository.destroy({ where: { id } });
+      return true;
+    } catch (e) {
+      throw new Error(e);
+    }
   }
 }
