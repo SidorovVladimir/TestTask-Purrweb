@@ -8,5 +8,6 @@ import { ColumnsController } from './columns.controller';
   imports: [SequelizeModule.forFeature([Columns])],
   providers: [ColumnsService],
   controllers: [ColumnsController],
+  exports: [ColumnsService],
 })
 export class ColumnsModule {}
